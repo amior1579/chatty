@@ -1,0 +1,28 @@
+.div_register_form{
+    display: block;
+    text-align: center;
+    margin: 50px 0 0 0;
+}
+
+.div_register_form fieldset{
+    display: inline-block;
+}
+
+.div_register_form legend{
+    font-size: 20px;
+    margin:  0 0 10px 0;
+}
+
+.div_register_form label{
+    display: block;
+    padding: 5px;
+    text-align: left;
+}
+
+
+.div_register_form button{
+    background-color: black;
+    padding: 5px 20px 5px;
+    color: white;
+    margin: 10px 0 0 0;
+}

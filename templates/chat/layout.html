@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="stylesheet" href="{% static 'chat/layout.css' %}">
+{% block head %}
+{% endblock %}
+</head>
+
+<body>
+    <div class="div_header">
+        <div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout_user' %}">خروج</a>
+            {% else %}
+                <a href="{% url 'login_page' %}">ورود</a>
+                <a href="{% url 'register_page' %}">ثبت نام</a>
+            {% endif %}
+        </div>
+        <div>
+            <h1>hi</h1>
+        </div>
+    </div>
+    <div>
+        {% block body %}
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>

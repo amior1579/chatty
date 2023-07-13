@@ -1,0 +1,30 @@
+{% extends 'chat/layout.html' %}
+{% load static %}
+
+<head>
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'chat/login_page.css' %}">
+        <title>Register</title>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+
+    <div class="div_register_form">
+        <fieldset>
+            <legend>Register form</legend>
+            <h4>{{message}}</h4>
+            <h4>{{username_exists_message}}</h4>
+            <form action="{% url 'user_registration' %}" method="post">
+                {% csrf_token %}
+                <label>Username:       <input type="text"     name="username"></label>
+                <label>Password:       <input type="password" name="password"></label>
+                <label>Password Again: <input type="password" name="confirmation"></label>
+                <button type="submit">Register</button>
+            </form>
+        </fieldset>
+    </div>
+
+{% endblock %}
+</body>
+</html>
