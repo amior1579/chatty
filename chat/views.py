@@ -13,7 +13,14 @@ from django.urls import reverse
 
 
 def index(request):
-    return render(request, 'chat/index.html')
+    users = UserAuth.objects.all()
+    auth_user = request.user
+    return render(request, 'chat/chatroom.html',{
+        'users': users,
+        'auth_user': auth_user,
+    })
+    # return render(request, 'chat/index.html')
+
 
 def room(request, room_name):
     return render(request, "chat/room.html", {
