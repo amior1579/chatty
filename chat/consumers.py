@@ -4,6 +4,8 @@ import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
+from .models import *
 
 
 
@@ -30,7 +32,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # Receive message from WebSocket
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
+        message = text_data_json["messageee"]
+        user_sender = str(text_data_json["user_sender"])
+        user_receiver = str(text_data_json["user_receiver"])
+        print(user_sender)
+        print(text_data_json)
 
         # Send message to room group
         await self.channel_layer.group_send(
@@ -40,9 +46,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
         )
 
+        await Save_Messages(
+            message,
+            user_sender,
+            user_receiver,
+            self.scope['user']
+        )
+
     # Receive message from room group
     async def chat_message(self, event):
-        print(event)
+        # print(event)
         message = event["message"]
 
 
@@ -50,3 +63,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             "message": message
         }))
+
+
+
+@database_sync_to_async
+def Save_Messages(message,user_sender, user_receiver, user):
+    # print('database',user)
+    # print('database',user_sender)
+    senderr = UserAuth.objects.get(username = user_sender)
+    receiverr = UserAuth.objects.get(username = user_receiver)
+    return Message.objects.create(content=message, sender=senderr , Receiver=receiverr)

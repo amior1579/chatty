@@ -16,7 +16,7 @@
 
 			<ul class="ul_show_messages">
 			</ul>
-            
+            <!-- <h1>{{room_name}}</h1> -->
 		</div>
 		<div class="message-input">
 			<div class="wrap">
@@ -30,6 +30,7 @@
 
 
         <script>
+
             const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
             // send and receive message
@@ -69,8 +70,20 @@
                 const messageInputDom = document.querySelector('#chat-message-input');
                 const message = messageInputDom.value;
                 
+
+                var pageURL = window.location.href;
+                console.log(pageURL);
+                var names = pageURL.split("/").filter(Boolean)[3].split("_to_");
+                const sender = names[1]
+                const receiver = names[0]
+                // console.log(names[0]);
+                // console.log(names[1]);
+
+
                 chatSocket.send(JSON.stringify({
-                    'message': message
+                    'messageee': message,
+                    'user_sender': sender,
+                    'user_receiver': receiver,
                 }));
                 messageInputDom.value = '';
             };
