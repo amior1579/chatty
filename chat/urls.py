@@ -3,6 +3,13 @@ from . import views
 # from rest_framework import routers
 from .views import *
 
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register('Users', views.UserView)
+router.register('Message', views.MessageView)
+
+
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('login_page', views.login_page, name='login_page'),
@@ -12,4 +19,7 @@ urlpatterns = [
     path('user_login', views.user_login, name='user_login'),
     
     path("<str:room_name>/", views.room, name="room"),
+
+    path('apis/chatapi', include(router.urls)),
+
 ]

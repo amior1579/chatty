@@ -6,6 +6,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+from rest_framework import viewsets, permissions
+from .serializers import *
+
 
 
 # from .serializers import *
@@ -28,6 +31,21 @@ def room(request, room_name):
         "room_name": room_name
         }
     )
+
+
+
+class UserView(viewsets.ModelViewSet):
+    queryset = UserAuth.objects.all()
+    serializer_class = UserSerializer
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+class MessageView(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+
+
+
+
 
 def login_page(request):
     return render(request, 'chat/login.html',{
