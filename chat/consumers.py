@@ -11,8 +11,10 @@ from .models import *
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
+    # @database_sync_to_async
     async def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
+        self.user_request = self.scope['user']
         self.room_group_name = "chat_%s" % self.room_name
 
         # print('scooooop ',self.scope["subprotocols"])
@@ -54,6 +56,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await self.accept()
 
+
     async def disconnect(self, close_code):
         # Leave room group
         await self.channel_layer.group_discard(
@@ -64,13 +67,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # Receive message from WebSocket
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        # print('text_data_jsonnnn', text_data_json)
+        print('text_data_jsonnnn', text_data_json)
         message = text_data_json["messageee"]
         user_sender = str(text_data_json["user_sender"])
         user_receiver = str(text_data_json["user_receiver"])
         # print(user_sender)
         # print(text_data_json)
 
+        self.Layers = await Channel_Layers(self.room_group_name,self.user_request)
+        print(self.Layers)
+        if self.Layers == False:
+            await Save_layer(
+                self.room_group_name,  
+                self.user_request  
+            )
 
         # Send message to room group
         await self.channel_layer.group_send(
@@ -110,3 +120,17 @@ def Save_Messages(message,user_sender, user_receiver, user):
     senderr = UserAuth.objects.get(username = user_sender)
     receiverr = UserAuth.objects.get(username = user_receiver)
     return Message.objects.create(content=message, sender=senderr , Receiver=receiverr)
+
+
+@database_sync_to_async
+def Save_layer(room_group_name,user_request):
+    # print('database',user)
+    # print('database',user_sender)
+    # senderr = UserAuth.objects.get(username = user_sender)
+    # receiverr = UserAuth.objects.get(username = user_receiver)
+    return channelLayers.objects.create(room_name=room_group_name, client1=user_request)
+
+
+@database_sync_to_async
+def Channel_Layers(room_group_name,user_request):
+    return channelLayers.objects.filter(room_name=room_group_name, client1=user_request).exists()

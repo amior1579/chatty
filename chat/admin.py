@@ -4,3 +4,4 @@ from .models import *
 
 admin.site.register(UserAuth)
 admin.site.register(Message)
+admin.site.register(channelLayers)

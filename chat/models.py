@@ -18,3 +18,14 @@ class Message(models.Model):
     
     def last_10_messages(self):
         return Message.objects.order_by('-timestamp').all[:10]
+    
+
+
+class channelLayers(models.Model):
+    client1 = models.ForeignKey(UserAuth, related_name='client1', on_delete=models.CASCADE)
+    client2 = models.ForeignKey(UserAuth, related_name='client2', on_delete=models.CASCADE, null=True)
+    room_name = models.TextField()
+
+    # def __str__(self):
+    #     return f'{self.client1.username} to {self.client2.username}'
+    
