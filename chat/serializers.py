@@ -3,14 +3,22 @@ from .models import *
 # from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+# class UserSerializer(serializers.HyperlinkedModelSerializer):
+class RequestUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAuth
+        fields = '__all__'
+
+# class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAuth
         # fields = '__all__'
         fields = ('id','username','email','url')
 
 
-class MessageSerializer(serializers.HyperlinkedModelSerializer):
+# class MessageSerializer(serializers.HyperlinkedModelSerializer):
+class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = '__all__'

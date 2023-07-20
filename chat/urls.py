@@ -5,6 +5,7 @@ from .views import *
 
 from rest_framework import routers
 router = routers.DefaultRouter()
+router.register('Request User', views.RequestUserView, basename='Request User')
 router.register('Users', views.UserView)
 router.register('Message', views.MessageView)
 
@@ -21,5 +22,6 @@ urlpatterns = [
     path("<str:room_name>/", views.room, name="room"),
 
     path('apis/chatapi', include(router.urls)),
+    path('apis/chatapiMessage/<str:s_name>/to/<str:r_name>', views.user_messages, name='user_messages'),
 
 ]

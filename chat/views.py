@@ -1,20 +1,27 @@
 from django.shortcuts import render
 from .models import *
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from rest_framework.decorators import action
 
 from rest_framework import viewsets, permissions
 from .serializers import *
+from django.db.models import Q
+from django.http import HttpResponse, JsonResponse
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # from .serializers import *
 # from rest_framework import viewsets, permissions
 # from rest_framework_simplejwt.views import TokenObtainPairView
 
+
+# request_user = authenticate
+# print(request_user)
 
 def index(request):
     users = UserAuth.objects.all()
@@ -34,17 +41,35 @@ def room(request, room_name):
 
 
 
+class RequestUserView(LoginRequiredMixin, viewsets.ModelViewSet):
+    queryset = UserAuth.objects.none()
+    serializer_class = RequestUserSerializer
+
+    def get_queryset(self):
+        authenticated_user = self.request.user
+        queryset = UserAuth.objects.filter(username=authenticated_user)
+        return queryset
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
 class UserView(viewsets.ModelViewSet):
     queryset = UserAuth.objects.all()
     serializer_class = UserSerializer
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
+
 class MessageView(viewsets.ModelViewSet):
+    # queryset = Message.objects.all()
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
 
 
-
+def user_messages(request, s_name, r_name):
+    sender_name = UserAuth.objects.get(username = s_name)
+    receiver_name = UserAuth.objects.get(username = r_name)
+    user_messages = Message.objects.filter(sender = sender_name, Receiver=receiver_name )
+    if request.method == 'GET':
+        serializer = MessageSerializer(user_messages, many=True )
+        return JsonResponse(serializer.data, safe=False )
 
 
 def login_page(request):

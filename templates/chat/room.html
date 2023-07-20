@@ -42,9 +42,60 @@
                 + '/'
             );
 
+        fetch('/chat/apis/chatapiRequest%20User/')
+        .then(response => response.json())
+        .then(requestUserr =>{
+            const requestUser = requestUserr[0];
+            // console.log('yohooo ' + requestUser);
+
+            var pageURL = window.location.href; 
+            console.log(pageURL);
+            var names = pageURL.split("/").filter(Boolean)[3].split("_to_");
+            const receiver = names[0]
+            const sender = names[1]
+            // console.log(names[0]);
+            console.log(names[1]);
+
+
+            fetch(`/chat/apis/chatapiMessage/${sender}/to/${receiver}`)
+            .then(response => response.json())
+            .then(messages => {
+                messages.forEach(message =>{
+                    console.log('hiiii'+ message);
+                    // console.log(requestUser);
+                    console.log(message);
+                    if (message.sender == requestUser.id){
+                        
+                        console.log('yeeeeeees');
+
+                        const ul_show_messages = document.querySelector(".ul_show_messages");
+                        const li_message = document.createElement("li");
+                        li_message.className = "replies";
+                        const text_message = document.createElement("p");
+                        text_message.textContent = message.content;
+                        li_message.appendChild(text_message);
+                        ul_show_messages.appendChild(li_message);
+                        
+                    }else if (message.Receiver === receiver){
+                        const ul_show_messages = document.querySelector(".ul_show_messages");
+                        const li_message = document.createElement("li");
+                        li_message.className = "sent";
+                        const text_message = document.createElement("p");
+                        text_message.textContent = message.content;
+                        li_message.appendChild(text_message);
+                        ul_show_messages.appendChild(li_message);
+                    }
+                })
+            })
+
+
+
+
+            // ----------------------------------- channels -----------------------------------
+
             chatSocket.onmessage = function(e) {
                 const data = JSON.parse(e.data);
-
+                console.log(data);
                 const ul_show_messages = document.querySelector(".ul_show_messages");
                 const li_message = document.createElement("li");
                 li_message.className = "sent";
@@ -69,15 +120,6 @@
             document.querySelector('#chat-message-submit').onclick = function(e) {
                 const messageInputDom = document.querySelector('#chat-message-input');
                 const message = messageInputDom.value;
-                
-
-                var pageURL = window.location.href;
-                console.log(pageURL);
-                var names = pageURL.split("/").filter(Boolean)[3].split("_to_");
-                const sender = names[1]
-                const receiver = names[0]
-                // console.log(names[0]);
-                // console.log(names[1]);
 
 
                 chatSocket.send(JSON.stringify({
@@ -87,6 +129,7 @@
                 }));
                 messageInputDom.value = '';
             };
+        })
 
 </script>
 
