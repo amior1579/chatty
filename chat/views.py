@@ -51,8 +51,14 @@ class RequestUserView(LoginRequiredMixin, viewsets.ModelViewSet):
         return queryset
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
+
 class UserView(viewsets.ModelViewSet):
-    queryset = UserAuth.objects.all()
+    queryset = UserAuth.objects.none()
+    def get_queryset(self):
+        authenticated_user = self.request.user
+        queryset = UserAuth.objects.exclude(username=authenticated_user.username)
+        return queryset
+    
     serializer_class = UserSerializer
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 

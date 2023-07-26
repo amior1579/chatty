@@ -71,7 +71,7 @@
                     </li>
                 {% endfor %}
 
-				<li class="contact">
+				<!-- <li class="contact">
 					<div class="wrap">
 						<span class="contact-status online"></span>
 						<img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
@@ -100,9 +100,16 @@
 							<p class="preview">I was thinking that we could have chicken tonight, sounds good?</p>
 						</div>
 					</div>
-				</li>
+				</li> -->
 			</ul>
 		</div>
+		<div class="contact" style="display: none;">
+			<ul>
+
+			</ul>
+		</div>
+
+
 		<div id="bottom-bar">
 			<button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Contacts</span></button>
 			<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
@@ -112,34 +119,6 @@
 	<div class="content">
 		{% block body %}
         {% endblock %}
-		<!-- <div class="contact-profile">
-			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-			<p>Harvey Specter</p>
-			<div class="social-media">
-				<i class="fa fa-facebook" aria-hidden="true"></i>
-				<i class="fa fa-twitter" aria-hidden="true"></i>
-				 <i class="fa fa-instagram" aria-hidden="true"></i>
-			</div>
-		</div>
-		<div class="messages">
-			<ul>
-				<li class="sent">
-					<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
-					<p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
-				</li>
-				<li class="replies">
-					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-					<p>When you're backed against the wall, break the god damn thing down.</p>
-				</li>
-			</ul>
-		</div>
-		<div class="message-input">
-			<div class="wrap">
-				<input type="text" id="chat-message-input" placeholder="Write your message..." />
-				<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-				<button class="submit" id="chat-message-submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-			</div>
-		</div> -->
 	</div>
 </div>
 
@@ -161,6 +140,14 @@
 
 // ---------------------------------------------------------------
 
+
+// -------------------------- contact show --------------------------
+
+
+
+
+
+// ---------------------------------------------------------------
 
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
