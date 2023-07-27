@@ -14,8 +14,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # @database_sync_to_async
     async def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
-        self.user_request = self.scope['user']
         self.room_group_name = "chat_%s" % self.room_name
+        self.user_request = self.scope['user']
 
         # print('scooooop ',self.scope["subprotocols"])
         # {

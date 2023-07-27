@@ -26,7 +26,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def index(request):
     users = UserAuth.objects.all()
     auth_user = request.user
-    return render(request, 'chat/chatroom.html',{
+    return render(request, 'chat/contacts.html',{
         'users': users,
         'auth_user': auth_user,
     })

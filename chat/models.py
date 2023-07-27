@@ -25,6 +25,9 @@ class channelLayers(models.Model):
     client1 = models.ForeignKey(UserAuth, related_name='client1', on_delete=models.CASCADE)
     client2 = models.ForeignKey(UserAuth, related_name='client2', on_delete=models.CASCADE, null=True)
     room_name = models.TextField()
+    messages = models.ManyToManyField(Message, blank=True)
+    create_at = models.DateTimeField(auto_now_add=True, null=True)
+
 
     # def __str__(self):
     #     return f'{self.client1.username} to {self.client2.username}'
