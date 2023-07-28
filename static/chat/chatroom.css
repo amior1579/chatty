@@ -354,6 +354,12 @@ padding: 10px 0 15px 0;
 font-size: 0.9em;
 cursor: pointer;
 }
+#frame #sidepanel #show_contact ul li.contact {
+position: relative;
+padding: 10px 0 15px 0;
+font-size: 0.9em;
+cursor: pointer;
+}
 @media screen and (max-width: 735px) {
 #frame #sidepanel #contacts ul li.contact {
   padding: 6px 0 46px 8px;
@@ -512,6 +518,15 @@ text-overflow: ellipsis;
 transition: 1s all ease;
 }
 #frame #sidepanel #contacts ul li.contact .wrap .meta .preview span {
+position: initial;
+border-radius: initial;
+background: none;
+border: none;
+padding: 0 2px 0 0;
+margin: 0 0 0 1px;
+opacity: .5;
+}
+#frame #sidepanel #show_contact ul li.contact .wrap .meta .preview span {
 position: initial;
 border-radius: initial;
 background: none;

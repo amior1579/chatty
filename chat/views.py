@@ -68,6 +68,14 @@ class MessageView(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
 
+class RoomsView(viewsets.ModelViewSet):
+    queryset = channelLayers.objects.none()
+    def get_queryset(self):
+        authenticated_user = self.request.user
+        queryset = channelLayers.objects.filter(Q(client1=authenticated_user) | Q(client2=authenticated_user))
+        return queryset
+    serializer_class = RoomsSerializer
+
 
 def user_messages(request, s_name, r_name):
     sender_name = UserAuth.objects.get(username = s_name)

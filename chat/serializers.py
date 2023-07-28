@@ -23,3 +23,11 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = '__all__'
         # fields = ('id','username','email','url')
+
+
+# class MessageSerializer(serializers.HyperlinkedModelSerializer):
+class RoomsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = channelLayers
+        fields = '__all__'
+        # fields = ('id','username','email','url')

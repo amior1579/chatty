@@ -8,6 +8,7 @@ router = routers.DefaultRouter()
 router.register('Request User', views.RequestUserView, basename='Request User')
 router.register('Users', views.UserView)
 router.register('Message', views.MessageView)
+router.register('Romms', views.RoomsView)
 
 
 
